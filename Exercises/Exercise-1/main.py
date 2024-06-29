@@ -44,28 +44,27 @@ def download_files(uri, filename):
     with open(path_to_zip_file, mode="wb") as file:
         file.write(response.content)
     
-    print("success")
+    print("%s sucessfully downloaded")
     
-def unzip_files():
+def unzip_files(filename):
     path_to_zip_file = final_path
 
-    with zipfile.ZipFile(path_to_zip_file, 'r') as zip_ref:
+    with zipfile.ZipFile(path_to_zip_file + filename, 'r') as zip_ref:
         zip_ref.extractall(path_to_zip_file)
 
 def main():
     dir = "downloads"
 
-    # create_directory(dir)
-    # download_files("https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2018_Q4.zip","Divvy_Trips_2018_Q4.zip")
-    unzip_files()
-    # for uri in download_uris:
+    create_directory(dir)
 
-    #     parsed_url = urlparse(uri, filename)
-    #     x = parsed_url.path
-    #     filename = x.replace('/', '')
+    for uri in download_uris:
 
-    #     download_files(uri)
-    #     unzip_files(filename)
+        parsed_url = urlparse(uri, filename)
+        x = parsed_url.path
+        filename = x.replace('/', '')
+
+        download_files(uri)
+        unzip_files(filename)
 
 
 if __name__ == "__main__":
