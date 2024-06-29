@@ -1,9 +1,9 @@
 import requests
-import pandas
+import pandas as pd
 from bs4 import BeautifulSoup
 
 
-parent_dir = "C:\\Users\\milo\\personal projects\\data-engineering-practice\\Exercises\\Exercise-1\\"
+parent_dir = "C:\\Users\\milo\\personal projects\\data-engineering-practice\\Exercises\\Exercise-2\\"
 
 
 def find_filename(soup, date):
@@ -33,8 +33,9 @@ def download_csv(uri,filename):
     
     print("%s sucessfully downloaded" % filename)
 
-def csv_to_pandas():
-    pass
+def csv_to_pandas(filename):
+    df = pd.read_csv(filename)
+    print(df.loc[df['HourlyDryBulbTemperature'].idxmax()])
 
 def main():
     # your code here
@@ -47,6 +48,7 @@ def main():
     download_link = url + filename
 
     download_csv(download_link, filename)
+    csv_to_pandas(filename)
 
 
 if __name__ == "__main__":
