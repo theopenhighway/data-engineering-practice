@@ -13,8 +13,8 @@ download_uris = [
     "https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2220_Q1.zip",
 ]
 
-parent_dir = "C:\\Users\\milo\\personal projects\\data-engineering-practice\\Exercises\\"
-final_path = "C:\\Users\\milo\\personal projects\\data-engineering-practice\\Exercises\\downloads\\"
+parent_dir = "C:\\Users\\milo\\personal projects\\data-engineering-practice\\Exercises\\Exercise-1\\"
+final_path = "C:\\Users\\milo\\personal projects\\data-engineering-practice\\Exercises\\Exercise-1\\downloads\\"
 
 def create_directory(dir):
     path = os.path.join(parent_dir, dir)
@@ -46,8 +46,8 @@ def download_files(uri, filename):
     
     print("success")
     
-def unzip_files(filename):
-    path_to_zip_file = final_path + filename
+def unzip_files():
+    path_to_zip_file = final_path
 
     with zipfile.ZipFile(path_to_zip_file, 'r') as zip_ref:
         zip_ref.extractall(path_to_zip_file)
@@ -56,8 +56,8 @@ def main():
     dir = "downloads"
 
     # create_directory(dir)
-    download_files("https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2018_Q4.zip","Divvy_Trips_2018_Q4.zip")
-    unzip_files("Divvy_Trips_2018_Q4.zip")
+    # download_files("https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2018_Q4.zip","Divvy_Trips_2018_Q4.zip")
+    unzip_files()
     # for uri in download_uris:
 
     #     parsed_url = urlparse(uri, filename)
