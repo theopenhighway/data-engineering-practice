@@ -2,6 +2,10 @@ import requests
 import pandas
 from bs4 import BeautifulSoup
 
+
+parent_dir = "C:\\Users\\milo\\personal projects\\data-engineering-practice\\Exercises\\Exercise-1\\"
+
+
 def find_filename(soup, date):
     for i in range(3,10):
         tr = soup.find_all('tr')[i]
@@ -13,8 +17,21 @@ def find_filename(soup, date):
     
     return None
 
-def download_csv(url):
-    pass
+def download_csv(uri,filename):
+    query_parameters = {"downloadformat": "csv"}
+
+    try:
+        response = requests.get(uri, params=query_parameters)
+    except requests.exceptions.HTTPError as e:
+        print(e.response.text)
+        return
+    
+    path_to_zip_file = parent_dir + filename
+
+    with open(path_to_zip_file, mode="wb") as file:
+        file.write(response.content)
+    
+    print("%s sucessfully downloaded" % filename)
 
 def csv_to_pandas():
     pass
@@ -29,7 +46,7 @@ def main():
 
     download_link = url + filename
 
-    download_csv(download_link)
+    download_csv(download_link, filename)
 
 
 if __name__ == "__main__":
