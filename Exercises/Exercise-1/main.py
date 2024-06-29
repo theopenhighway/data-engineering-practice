@@ -1,6 +1,7 @@
 import requests
 import os
 import zipfile
+from urllib.parse import urlparse
 
 download_uris = [
     "https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2018_Q4.zip",
@@ -13,6 +14,7 @@ download_uris = [
 ]
 
 parent_dir = "C:\\Users\\milo\\personal projects\\data-engineering-practice\\Exercises\\"
+final_path = "C:\\Users\\milo\\personal projects\\data-engineering-practice\\Exercises\\downloads\\"
 
 def create_directory(dir):
     path = os.path.join(parent_dir, dir)
@@ -28,7 +30,7 @@ def create_directory(dir):
     
     print("Directory '%s' already exists" % dir)
 
-def download_files(uri):
+def download_files(uri, filename):
     query_parameters = {"downloadformat": "zip"}
 
     try:
@@ -37,22 +39,33 @@ def download_files(uri):
         print(e.response.text)
         return
     
-    with open("gdp_by_country.zip", mode="wb") as file:
+    path_to_zip_file = final_path + filename
+
+    with open(path_to_zip_file, mode="wb") as file:
         file.write(response.content)
     
+    print("success")
     
 def unzip_files(filename):
-    path_to_zip_file = parent_dir + "\\downloads\\" + filename
+    path_to_zip_file = final_path + filename
+
     with zipfile.ZipFile(path_to_zip_file, 'r') as zip_ref:
         zip_ref.extractall(path_to_zip_file)
 
 def main():
     dir = "downloads"
 
-    create_directory(dir)
+    # create_directory(dir)
+    download_files("https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2018_Q4.zip","Divvy_Trips_2018_Q4.zip")
+    unzip_files("Divvy_Trips_2018_Q4.zip")
     # for uri in download_uris:
-    #     download_files(uri)
 
+    #     parsed_url = urlparse(uri, filename)
+    #     x = parsed_url.path
+    #     filename = x.replace('/', '')
+
+    #     download_files(uri)
+    #     unzip_files(filename)
 
 
 if __name__ == "__main__":
